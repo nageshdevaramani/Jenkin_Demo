@@ -1,18 +1,3 @@
-// pipeline {
-//     agent any
-//     stages {
-//         stage('Hello') {
-//             steps {
-//                 echo 'Hello World from Jenkins 🚀'
-//             }
-//         }
-//         stage('Hello1') {
-//             steps {
-//                 echo 'Hello World from Jenkins 🚀'
-//             }
-//         }
-//     }
-// }
 pipeline {
     agent any
 
@@ -33,16 +18,18 @@ pipeline {
             }
         }
 
+        stage('Create Table') {   // ✅ Missing stage added
             steps {
-        sh '''
-        PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "
-        CREATE TABLE IF NOT EXISTS employee (
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(100),
-            role VARCHAR(50)
-        );
-        "
-        '''
-    }
+                sh '''
+                PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "
+                CREATE TABLE IF NOT EXISTS employee (
+                    id SERIAL PRIMARY KEY,
+                    name VARCHAR(100),
+                    role VARCHAR(50)
+                );
+                "
+                '''
+            }
+        }
     }
 }
