@@ -33,18 +33,16 @@ pipeline {
             }
         }
 
-        stage('Create Table') {
             steps {
-                sh '''
-                PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME <<EOF
-                CREATE TABLE IF NOT EXISTS employee (
-                    id SERIAL PRIMARY KEY,
-                    name VARCHAR(100),
-                    role VARCHAR(50)
-                );
-                EOF
-                '''
-            }
-        }
+        sh '''
+        PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $DB_NAME -c "
+        CREATE TABLE IF NOT EXISTS employee (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100),
+            role VARCHAR(50)
+        );
+        "
+        '''
+    }
     }
 }
